@@ -1,6 +1,7 @@
 package com.project.JobApplication.company;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.JobApplication.Reviews.Review;
 import com.project.JobApplication.job.Job;
 import jakarta.persistence.*;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,17 @@ public class Company {
     private List<Job> jobs;
 
 
-//    private List<Review> reviews;
+    @OneToMany(mappedBy = "company", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnore
+    private List<Review> reviews;
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
 
     public Company() {
     }
