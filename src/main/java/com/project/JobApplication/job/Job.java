@@ -1,5 +1,6 @@
 package com.project.JobApplication.job;
 
+import com.project.JobApplication.company.Company;
 import jakarta.persistence.*;
 import org.hibernate.annotations.NotFound;
 
@@ -14,6 +15,17 @@ public class Job {
     private String minSalary;
     private String maxSalary;
     private String location;
+
+    @ManyToOne
+    private Company company;
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
 
     public Job() {
     }

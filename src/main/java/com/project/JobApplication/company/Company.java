@@ -1,10 +1,35 @@
 package com.project.JobApplication.company;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.JobApplication.job.Job;
+import jakarta.persistence.*;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
+@Entity
 public class Company {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String description;
+
+
+    public List<Job> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
+    }
+
+    @OneToMany(mappedBy = "company", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnore
+    private List<Job> jobs;
+
+
+//    private List<Review> reviews;
 
     public Company() {
     }

@@ -4,9 +4,10 @@ import com.project.JobApplication.company.Company;
 import com.project.JobApplication.company.Companyservice;
 import com.project.JobApplication.company.Repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class CompanyServiceImpl implements Companyservice {
 
     @Autowired
@@ -23,14 +24,13 @@ public class CompanyServiceImpl implements Companyservice {
     }
 
     @Override
-    public Boolean updateCompany(Company company) {
-        Long id=company.getId();
+    public Boolean updateCompany(Company company,Long id) {
         Company prevCompany=companyRepository.findById(id).orElse(null);
         if(prevCompany==null) return false;
 
         prevCompany.setTitle(company.getTitle());
         prevCompany.setDescription(company.getDescription());
-
+        prevCompany.setJobs(company.getJobs());
         companyRepository.save(prevCompany);
 
         return true;
