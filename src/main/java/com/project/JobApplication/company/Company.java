@@ -6,6 +6,7 @@ import com.project.JobApplication.job.Job;
 import jakarta.persistence.*;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 @Entity
 public class Company {
@@ -21,13 +22,16 @@ public class Company {
         return jobs;
     }
 
-    public void setJobs(List<Job> jobs) {
-        this.jobs = jobs;
-    }
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Job> jobs = new ArrayList<>();
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JsonIgnore
-    private List<Job> jobs;
+    // Setter Method - Ensure Proper Modification
+    public void setJobs(List<Job> jobs) {
+        this.jobs.clear(); // Clear existing jobs to trigger orphan removal
+        if (jobs != null) {
+            this.jobs.addAll(jobs);
+        }
+    }
 
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.REMOVE, orphanRemoval = true)
