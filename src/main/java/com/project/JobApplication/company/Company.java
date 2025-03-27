@@ -22,7 +22,10 @@ public class Company {
         return jobs;
     }
 
+
+
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Job> jobs = new ArrayList<>();
 
     // Setter Method - Ensure Proper Modification
@@ -35,7 +38,7 @@ public class Company {
 
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JsonIgnore
+//    @JsonIgnore
     private List<Review> reviews;
 
     public List<Review> getReviews() {
